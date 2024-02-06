@@ -23,11 +23,22 @@ class Game
 
     @messages.start_of_round(self, @board)
     
-    piece = select_piece
-    destination = select_destination
+    start_key = select_piece
+    end_key = select_destination
+    start_value = @board.board[start_key]
+    end_value = @board.board[end_key]
 
-    puts "#{piece}"
-    puts "#{destination}"
+    if start_value.validate_move(start_key, end_key) != true || friendly_fire?(start_value, end_value) == true
+      @messages.invalid_move
+      play_round
+    else
+      @board.board[end_key] = @board.board[start_key]
+      @board.board[start_key] = nil
+      @board.display_board
+      next_player(@current_player)
+      #play_round
+    end
+  
 
     
    
@@ -35,6 +46,15 @@ class Game
     
 
   end
+
+  def friendly_fire?(source, destination)
+    if destination == nil || destination.player != source.player
+      return false
+    else
+      return true
+    end
+  end
+
 
   def select_piece
     @messages.select_piece

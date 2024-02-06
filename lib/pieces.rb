@@ -21,7 +21,7 @@ end
 
 
 class King 
-  attr_accessor :marker
+  attr_accessor :marker, :player
 
   def initialize(player)
     @player = player
@@ -29,11 +29,22 @@ class King
     @possible_moves = [[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1],[0,-1]] 
   end
 
+  def validate_move(source, destination)
+    legal_moves = []
+
+    @possible_moves.each { |a,b| legal_moves.append([source[0] +a, source[1]+ b] )}
+    legal_moves.select { |move| move.all? { |d| d >=1  && d <=8 } }
+
+
+    return true if legal_moves.include?(destination)
+  end
+
+
 end
 
 
 class Queen 
-  attr_accessor :marker
+  attr_accessor :marker, :player
 
   def initialize(player)
     @player = player
@@ -45,7 +56,7 @@ end
 
 
 class Rook 
-  attr_accessor :marker
+  attr_accessor :marker, :player
 
   def initialize(player)
     @player = player
@@ -56,7 +67,7 @@ class Rook
 end
 
 class Bishop 
-  attr_accessor :marker
+  attr_accessor :marker, :player
 
   def initialize(player)
     @player = player
@@ -67,7 +78,7 @@ class Bishop
 end
 
 class Knight 
-  attr_accessor :marker
+  attr_accessor :marker, :player
 
   def initialize(player)
     @player = player
@@ -75,10 +86,21 @@ class Knight
     @possible_moves = [[1,2],[2,1],[2,-1],[1,-2],[-1,-2],[-2,-1],[-2,1],[-1,2]]
   end
 
+  def validate_move(source, destination)
+    legal_moves = []
+
+    @possible_moves.each { |a,b| legal_moves.append([source[0] +a, source[1]+ b] )}
+    legal_moves.select { |move| move.all? { |d| d >=1  && d <=8 } }
+    puts "#{legal_moves}"
+
+
+    return true if legal_moves.include?(destination)
+  end
+
 end
 
 class Pawn
-  attr_accessor :marker
+  attr_accessor :marker, :player
  
   def initialize(player)
     @player = player

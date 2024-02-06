@@ -89,18 +89,6 @@ class Board
     end
   end
 
-  # def player_selection
-  #   return gets.chomp.to_i
-  # end
-
-  # def valid_input?(input)
-  #   if input >= 1 && input <= 8
-  #     return true
-  #   else
-  #     messages.invalid_selection
-  #     false
-  #   end
-  # end
 
 end
 
