@@ -19,8 +19,24 @@ class Player
 
 end
 
+class Piece 
 
-class King 
+  def friendly_fire?(source, destination, board)
+    puts "#{board.board[destination]}"
+    if board.board[destination] == nil
+      return false
+    elsif board.board[destination].player == board.board[source].player
+      return true
+    else
+      return false
+    end
+  end
+
+
+end
+
+
+class King < Piece 
   attr_accessor :marker, :player
 
   def initialize(player)
@@ -29,21 +45,22 @@ class King
     @possible_moves = [[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1],[0,-1]] 
   end
 
-  def validate_move(source, destination)
+  def validate_move(source, destination, board)
+    return false if friendly_fire?(source, destination, board)
     legal_moves = []
 
     @possible_moves.each { |a,b| legal_moves.append([source[0] +a, source[1]+ b] )}
     legal_moves.select { |move| move.all? { |d| d >=1  && d <=8 } }
 
-
     return true if legal_moves.include?(destination)
+    false
   end
 
 
 end
 
 
-class Queen 
+class Queen < Piece 
   attr_accessor :marker, :player
 
   def initialize(player)
@@ -55,7 +72,7 @@ class Queen
 end
 
 
-class Rook 
+class Rook < Piece 
   attr_accessor :marker, :player
 
   def initialize(player)
@@ -63,10 +80,13 @@ class Rook
     @marker = "| " + player.codes[2] + " "
     @possible_moves = [[1,0],[0,1],[-1,0],[0,-1]]
   end
+
+  def validate_move()
+  end
   
 end
 
-class Bishop 
+class Bishop < Piece 
   attr_accessor :marker, :player
 
   def initialize(player)
@@ -77,7 +97,7 @@ class Bishop
 
 end
 
-class Knight 
+class Knight < Piece
   attr_accessor :marker, :player
 
   def initialize(player)
@@ -86,7 +106,8 @@ class Knight
     @possible_moves = [[1,2],[2,1],[2,-1],[1,-2],[-1,-2],[-2,-1],[-2,1],[-1,2]]
   end
 
-  def validate_move(source, destination)
+  def validate_move(source, destination, board)
+    return false if friendly_fire?(source, destination, board)
     legal_moves = []
 
     @possible_moves.each { |a,b| legal_moves.append([source[0] +a, source[1]+ b] )}
@@ -95,11 +116,12 @@ class Knight
 
 
     return true if legal_moves.include?(destination)
+    false
   end
 
 end
 
-class Pawn
+class Pawn < Piece 
   attr_accessor :marker, :player
  
   def initialize(player)

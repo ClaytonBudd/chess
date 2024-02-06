@@ -12,10 +12,10 @@ class Game
                       "\u265D".encode('utf-8'), "\u265E".encode('utf-8'), "\u265F".encode('utf-8'), 7, 1]
 
   def initialize
-    @player_1 = Player.new("Player 1", @@player_1_codes)
-    @player_2 = Player.new("Player 2", @@player_2_codes)
+    @player_1 = Player.new("White", @@player_1_codes)
+    @player_2 = Player.new("Black", @@player_2_codes)
     @current_player = @player_1
-    @board = Board.new(@player_1, @player_2)
+    @board = Board.new(self)
     @messages = Messages.new
   end 
 
@@ -28,8 +28,8 @@ class Game
     start_value = @board.board[start_key]
     end_value = @board.board[end_key]
 
-    if start_value.validate_move(start_key, end_key) != true || friendly_fire?(start_value, end_value) == true
-      @messages.invalid_move
+    if start_value.validate_move(start_key, end_key, @board) == false
+      @messages.invalid_move()
       play_round
     else
       @board.board[end_key] = @board.board[start_key]
@@ -46,15 +46,6 @@ class Game
     
 
   end
-
-  def friendly_fire?(source, destination)
-    if destination == nil || destination.player != source.player
-      return false
-    else
-      return true
-    end
-  end
-
 
   def select_piece
     @messages.select_piece

@@ -29,7 +29,7 @@ class Messages
     puts "You have selected " + "#{node}" + " is this correct? (y/n)"
   end
 
-  def invalid_move
+  def invalid_move()
     puts "\n"
     puts "That move is not allowed, please try again"
   end
