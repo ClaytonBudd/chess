@@ -20,17 +20,19 @@ require_relative "pieces.rb"
 class Board
   attr_accessor :board
 
-  @@player_1_codes = ["\u2654".encode('utf-8'), "\u2655".encode('utf-8'), "\u2656".encode('utf-8'), 
-                      "\u2657".encode('utf-8'), "\u2658".encode('utf-8'), "\u2659".encode('utf-8'), 7, 1]
+  # @@player_1_codes = ["\u2654".encode('utf-8'), "\u2655".encode('utf-8'), "\u2656".encode('utf-8'), 
+  #                     "\u2657".encode('utf-8'), "\u2658".encode('utf-8'), "\u2659".encode('utf-8'), 7, 1]
 
-  @@player_2_codes = ["\u265A".encode('utf-8'), "\u265B".encode('utf-8'), "\u265C".encode('utf-8'), 
-                      "\u265D".encode('utf-8'), "\u265E".encode('utf-8'), "\u265F".encode('utf-8'), 7, 1]
+  # @@player_2_codes = ["\u265A".encode('utf-8'), "\u265B".encode('utf-8'), "\u265C".encode('utf-8'), 
+  #                     "\u265D".encode('utf-8'), "\u265E".encode('utf-8'), "\u265F".encode('utf-8'), 7, 1]
 
                       
-  def initialize
+  def initialize(player_1, player_2)
     @board = {}
-    @player_1 = Player.new("player_1", @@player_1_codes)
-    @player_2 = Player.new("player_2", @@player_2_codes)
+    @player_1 = player_1
+    @player_2 = player_2
+    empty_board
+    fill_board
   end
 
 
@@ -87,10 +89,18 @@ class Board
     end
   end
 
-end
+  # def player_selection
+  #   return gets.chomp.to_i
+  # end
 
-board = Board.new
-board.empty_board
-board.fill_board
-board.display_board
+  # def valid_input?(input)
+  #   if input >= 1 && input <= 8
+  #     return true
+  #   else
+  #     messages.invalid_selection
+  #     false
+  #   end
+  # end
+
+end
 
