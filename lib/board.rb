@@ -71,7 +71,9 @@ class Board
     keys = @board.keys
     keys.sort!
     index = 0
-    8.times do
+    puts "         1   2   3   4   5   6   7   8   " + "\n"
+    8.times do |row|
+      print "   " + "#{(row +1)}" + "   "
       8.times do 
         if @board[keys[index]] != nil
           print "#{@board[keys[index]].marker}"
@@ -81,7 +83,7 @@ class Board
         index +=1
       end
     end
-      puts "|" + "\n" + "_________________________________"
+      puts "|" + "\n" + "        _______________________________"
     end
   end
 
