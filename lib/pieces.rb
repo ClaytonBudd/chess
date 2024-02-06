@@ -69,6 +69,29 @@ class Queen < Piece
     @possible_moves = [[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1],[0,-1]] 
   end
 
+  def validate_move(source, destination, board)
+    return false if friendly_fire?(source, destination, board)
+
+    legal_moves = []
+    index = 0
+    current = [source[0] + @possible_moves[index][0], source[1] + @possible_moves[index][1]]
+    
+    while current[0].between?(1,8) && current[1].between?(1,8)
+      if board.board[current] == nil
+        legal_moves.append(current)
+        current = [source[0] + @possible_moves[index][0], source[1] + @possible_moves[index][1]]
+      else
+        if board.board[current].player != board.game.current_player
+          legal_moves.append(current)
+          index +=1
+        else
+          index +=1
+        end
+      end 
+    end
+  return true if legal_moves.include?(destination)
+  false
+  end
 end
 
 
@@ -81,7 +104,28 @@ class Rook < Piece
     @possible_moves = [[1,0],[0,1],[-1,0],[0,-1]]
   end
 
-  def validate_move()
+  def validate_move(source, destination, board)
+    return false if friendly_fire?(source, destination, board)
+
+    legal_moves = []
+    index = 0
+    current = [source[0] + @possible_moves[index][0], source[1] + @possible_moves[index][1]]
+    
+    while current[0].between?(1,8) && current[1].between?(1,8)
+      if board.board[current] == nil
+        legal_moves.append(current)
+        current = [source[0] + @possible_moves[index][0], source[1] + @possible_moves[index][1]]
+      else
+        if board.board[current].player != board.game.current_player
+          legal_moves.append(current)
+          index +=1
+        else
+          index +=1
+        end
+      end 
+    end
+  return true if legal_moves.include?(destination)
+  false
   end
   
 end
@@ -93,6 +137,30 @@ class Bishop < Piece
     @player = player
     @marker = "| " + player.codes[3] + " "
     @possible_moves = [[1,1],[-1,1],[-1,-1],[1,-1]]
+  end
+  
+  def validate_move(source, destination, board)
+    return false if friendly_fire?(source, destination, board)
+
+    legal_moves = []
+    index = 0
+    current = [source[0] + @possible_moves[index][0], source[1] + @possible_moves[index][1]]
+    
+    while current[0].between?(1,8) && current[1].between?(1,8)
+      if board.board[current] == nil
+        legal_moves.append(current)
+        current = [source[0] + @possible_moves[index][0], source[1] + @possible_moves[index][1]]
+      else
+        if board.board[current].player != board.game.current_player
+          legal_moves.append(current)
+          index +=1
+        else
+          index +=1
+        end
+      end 
+    end
+  return true if legal_moves.include?(destination)
+  false
   end
 
 end

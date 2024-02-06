@@ -36,7 +36,7 @@ class Game
       @board.board[start_key] = nil
       @board.display_board
       next_player(@current_player)
-      #play_round
+      play_round
     end
   
 
